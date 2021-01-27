@@ -1,0 +1,49 @@
+{
+	"name": "DS_AzureSQlDB_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureSQLDB_Source",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": "@dataset().DBName",
+				"ServerName": "@dataset().ServerName",
+				"UserName": "@dataset().UserName",
+				"Password": "@dataset().Password"
+			}
+		},
+		"parameters": {
+			"DBName": {
+				"type": "string"
+			},
+			"ServerName": {
+				"type": "string"
+			},
+			"UserName": {
+				"type": "string"
+			},
+			"Password": {
+				"type": "string"
+			},
+			"SchemaName": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

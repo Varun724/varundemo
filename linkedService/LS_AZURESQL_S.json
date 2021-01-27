@@ -1,0 +1,25 @@
+{
+	"name": "LS_AZURESQL_S",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"Tenent": {
+				"type": "string"
+			},
+			"principle Id": {
+				"type": "string"
+			},
+			"principal key": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=edhazuredbgbdev.database.windows.net;Initial Catalog=edhframeworksdb",
+			"servicePrincipalId": "@{linkedService().principle Id}",
+			"servicePrincipalKey": "@{linkedService().principal key}",
+			"tenant": "@{linkedService().Tenent}"
+		}
+	}
+}

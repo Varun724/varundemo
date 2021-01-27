@@ -1,0 +1,28 @@
+{
+	"name": "LS_ASQL_S",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"tenant_id": {
+				"type": "string"
+			},
+			"spn_client_id": {
+				"type": "string"
+			},
+			"ServicePrincipalKey": {
+				"type": "string"
+			},
+			"spn_client_secret": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=edhazuredbgbdev.database.windows.net;Initial Catalog=edhframeworksdb",
+			"servicePrincipalId": "@{linkedService().spn_client_id}",
+			"servicePrincipalKey": "@{linkedService().ServicePrincipalKey}",
+			"tenant": "@{linkedService().tenant_id}"
+		}
+	}
+}

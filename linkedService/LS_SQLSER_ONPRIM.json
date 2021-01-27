@@ -1,0 +1,29 @@
+{
+	"name": "LS_SQLSER_ONPRIM",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"Server name": {
+				"type": "string"
+			},
+			"Database name": {
+				"type": "string"
+			},
+			"User name": {
+				"type": "string"
+			},
+			"Password": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Data Source=\"@{linkedService().Server name}\";Initial Catalog=\"@{linkedService().Database name}\";User ID=\"@{linkedService().User name}\";Password=@{linkedService().Password}"
+		},
+		"connectVia": {
+			"referenceName": "HintegrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

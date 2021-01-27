@@ -1,0 +1,25 @@
+{
+	"name": "brewdatadfgbdev",
+	"properties": {
+		"globalParameters": {
+			"SQL_Json_Arrey": {
+				"type": "array",
+				"value": [
+					{
+						"TableName": "Product",
+						"ColumnName": "productid,name"
+					},
+					{
+						"TableName": "ProductCategory",
+						"ColumnName": "productcategoryid,name"
+					},
+					{
+						"TableName": "ProductModel",
+						"ColumnName": "ProductModelID,Name"
+					}
+				]
+			}
+		}
+	},
+	"location": "westeurope"
+}

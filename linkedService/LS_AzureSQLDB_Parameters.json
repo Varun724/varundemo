@@ -1,0 +1,25 @@
+{
+	"name": "LS_AzureSQLDB_Parameters",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"DBName": {
+				"type": "string"
+			},
+			"ServerName": {
+				"type": "string"
+			},
+			"UserName": {
+				"type": "string"
+			},
+			"Password": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().ServerName};Initial Catalog=@{linkedService().DBName};user id=@{linkedService().username};password=@{linkedService().password};Server=@{linkedService().ServerName};database=@{linkedService().DBName};trusted_connection=False"
+		}
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"name": "DS_AzureSqlMI_TableSchema_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureSqlMI_Source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlMITable",
+		"schema": [
+			{
+				"name": "BRIDGE_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "JOB_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BATCH_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "JOB_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "BATCH_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "BRIDGE_ACTIVE_FLAG",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ABI_BATCH_JOB_BRIDGE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

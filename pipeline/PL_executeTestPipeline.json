@@ -1,0 +1,79 @@
+{
+	"name": "PL_executeTestPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute PL_Test Pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Test",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Succes email notification meta data",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute PL_Test Pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-191.westeurope.logic.azure.com:443/workflows/215954c1fc544e01a9ff2f54252af557/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1St3M1oXCY8cvdJ8CAXSKwAuqdEfob3v2t0UUEnrAns",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\":\"Pipeline run succeeded\",\n\"message\":\"Pipeline succeesfully executed\",\n\"datafactoryname\":\"@{pipeline().DataFactory}\",\n\"pipelinename\":\"@{pipeline().Pipeline}\",\n\"pipelinerunid\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcnow()}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Failure email notification meta data_copy",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute PL_Test Pipeline",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-191.westeurope.logic.azure.com:443/workflows/215954c1fc544e01a9ff2f54252af557/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1St3M1oXCY8cvdJ8CAXSKwAuqdEfob3v2t0UUEnrAns",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\":\"Pipeline run Failed\",\n\"message\":\"@{activity('Execute PL_Test Pipeline').error.message}\",\n\"datafactoryname\":\"@{pipeline().DataFactory}\",\n\"pipelinename\":\"@{pipeline().Pipeline}\",\n\"pipelinerunid\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcnow()}\"\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-01-06T09:16:54Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

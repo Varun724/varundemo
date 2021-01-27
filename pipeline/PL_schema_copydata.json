@@ -1,0 +1,95 @@
+{
+	"name": "PL_schema_copydata",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlMISource",
+						"sqlReaderQuery": "Select *  FROM dbo.ABI_BATCH_JOB_BRIDGE",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"value": "@json(variables('Schema_variable')).translator",
+						"type": "Expression"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_AzureSqlMI_TableSchema_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADLS_Schema_Target",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"Schema_arrey": {
+				"type": "array",
+				"defaultValue": [
+					{
+						"source": {
+							"name": "BRIDGE_ID",
+							"type": "Int32",
+							"physicalType": "int"
+						},
+						"sink": {
+							"name": "BRIDGE_ID",
+							"type": "Int32",
+							"physicalType": "Int32"
+						}
+					},
+					{
+						"source": {
+							"name": "JOB_ID",
+							"type": "Int32",
+							"physicalType": "int"
+						},
+						"sink": {
+							"name": "JOB_ID",
+							"type": "Int32",
+							"physicalType": "Int32"
+						}
+					}
+				]
+			}
+		},
+		"variables": {
+			"Schema_variable": {
+				"type": "String",
+				"defaultValue": " {       \"translator\": {         \"type\": \"TabularTranslator\",         \"mappings\":[                             {                                 \"source\": {                                     \"name\": \"BRIDGE_ID\",                                     \"type\": \"Int32\",                                     \"physicalType\": \"int\"                                 },                                 \"sink\": {                                     \"name\": \"B_ID\",                                     \"type\": \"Int32\",                                     \"physicalType\": \"string\"                                 }                             },                             {                                 \"source\": {                                     \"name\": \"JOB_ID\",                                     \"type\": \"Int32\",                                     \"physicalType\": \"string\"                                 },                                 \"sink\": {                                     \"name\": \"J_ID\",                                     \"type\": \"Int32\",                                     \"physicalType\": \"string\"                                 }                             },                             {                                 \"source\": {                                     \"name\": \"JOB_NAME\",                                     \"type\": \"string\",                                     \"physicalType\": \"varchar\"                                 },                                 \"sink\": {                                     \"name\": \"J_Name\",                                     \"type\": \"Int32\",                                     \"physicalType\": \"int\"                                 }                             }  ]    }     }"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-01-20T16:06:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

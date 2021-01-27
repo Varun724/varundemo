@@ -1,0 +1,6 @@
+{
+	"name": "IR-DataOnboarding-OnPremise",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

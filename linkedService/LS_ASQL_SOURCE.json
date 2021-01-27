@@ -1,0 +1,34 @@
+{
+	"name": "LS_ASQL_SOURCE",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"Domain ": {
+				"type": "string"
+			},
+			"database": {
+				"type": "string"
+			},
+			"tenant_id": {
+				"type": "string"
+			},
+			"spn_client_id": {
+				"type": "string"
+			},
+			"ServicePrincipalKey": {
+				"type": "string"
+			},
+			"domainname": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().domainname};Initial Catalog=@{linkedService().database}",
+			"servicePrincipalId": "@{linkedService().spn_client_id}",
+			"servicePrincipalKey": "@{linkedService().ServicePrincipalKey}",
+			"tenant": "@{linkedService().tenant_id}"
+		}
+	}
+}

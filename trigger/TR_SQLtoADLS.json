@@ -1,0 +1,36 @@
+{
+	"name": "TR_SQLtoADLS",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_SQLtoADLS_Parameterization",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"ServerValue": "A",
+					"DBValue": "A",
+					"SchemaValue": "A",
+					"UserValue": "A",
+					"Password": "A",
+					"Json_Arrey": [
+						{
+							"A": "A"
+						}
+					]
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2021-01-07T13:09:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

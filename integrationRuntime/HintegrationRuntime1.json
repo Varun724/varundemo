@@ -1,0 +1,6 @@
+{
+	"name": "HintegrationRuntime1",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

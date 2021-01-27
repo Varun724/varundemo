@@ -1,0 +1,119 @@
+{
+	"name": "PL_SQLtoADLS_Parameterization",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach table variable",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Json_Arrey",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy SQL Table data to ADLS",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlMISource",
+									"sqlReaderQuery": {
+										"value": "select @{item().ColumnName} from @{pipeline().parameters.SchemaValue}.@{item().TableName}",
+										"type": "Expression"
+									},
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_AzureSQlDB_Source",
+									"type": "DatasetReference",
+									"parameters": {
+										"DBName": "@pipeline().parameters.DBValue",
+										"ServerName": "@pipeline().parameters.ServerValue",
+										"UserName": "@pipeline().parameters.UserValue",
+										"Password": "@pipeline().parameters.Password",
+										"SchemaName": "@pipeline().parameters.SchemaValue",
+										"TableName": "@item().TableName"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ADLS_Target",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@item().TableName",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"ServerValue": {
+				"type": "string"
+			},
+			"DBValue": {
+				"type": "string"
+			},
+			"SchemaValue": {
+				"type": "string"
+			},
+			"UserValue": {
+				"type": "string"
+			},
+			"Password": {
+				"type": "string"
+			},
+			"Json_Arrey": {
+				"type": "array"
+			}
+		},
+		"variables": {
+			"TableName": {
+				"type": "Array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-01-20T14:50:39Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
